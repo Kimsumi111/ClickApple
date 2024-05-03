@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6980951608574383896}
   - component: {fileID: 8201507264929334154}
+  - component: {fileID: 2215765380223134504}
   m_Layer: 0
   m_Name: NoteGroup
   m_TagString: Untagged
@@ -50,8 +51,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   noteMaxNum: 5
   baseNoteClass: {fileID: 2535683709760463453, guid: 14799927359c14d4a87f57996a9c9f0a, type: 3}
-  noteGapInterval: 8
+  noteGapInterval: 6.5
   noteSpawnTrf: {fileID: 7292091327491559601}
+  btnSrdr: {fileID: 2499611807497660193}
+  nomalBtnSprite: {fileID: 21300000, guid: d7b61edc0b017174095824530172ad1f, type: 3}
+  selectedBtnSprite: {fileID: 21300000, guid: 4fce3950ae84d9c46a154454c898bf17, type: 3}
+  anim: {fileID: 2215765380223134504}
+--- !u!111 &2215765380223134504
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 870902409561486810}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 2ec41d4b93478c943b59dd1ba93e1992, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 2ec41d4b93478c943b59dd1ba93e1992, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &1000180332085406703
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,7 +235,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 8.147187, y: 1.803529, z: 8.12393, w: 1.8223155}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
