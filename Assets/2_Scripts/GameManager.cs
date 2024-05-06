@@ -5,15 +5,27 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    // Start is called before the first frame update
+    [SerializeField] private int maxScore;
+    private int score;
+
     void Awake()
     {
-        Instance = this;
+        Instance = this;  
+    }
+    private void Start()
+    {
+        UIManager.Instance.OnScore(this.score, this.maxScore);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnScore(bool _isCorrect)
     {
-        
+        if (_isCorrect)
+        {
+            this.score++;
+        }
+        else
+            this.score--;
+
+        UIManager.Instance.OnScore(this.score, this.maxScore);
     }
 }

@@ -52,7 +52,7 @@ public class NoteGroup : MonoBehaviour
     {
         // 가장 아래의 과일 제거
         Note _noteClass = this.noteClassList[0];
-        _noteClass.Deactivate();
+        _noteClass.OnInput(_isSelected);
 
         this.noteClassList.RemoveAt(0);
 
