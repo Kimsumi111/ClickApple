@@ -6,9 +6,23 @@ public class NoteManager : MonoBehaviour
 {
     public static NoteManager Instance;
 
-    [SerializeField] private KeyCode[] initKeyCodeArr;
     [SerializeField] private NoteGroup baseNoteGroupClass = null;
     [SerializeField] private float noteGroupWidthInterval = 1f;
+    // 노트 매니저가 모든 키코드 알고있음
+    [SerializeField]
+    private KeyCode[] wholeKeyCodeArr = new KeyCode[]
+    {
+        KeyCode.A,
+        KeyCode.S,
+        KeyCode.D,
+        KeyCode.F,
+        KeyCode.G,
+        KeyCode.H,
+        KeyCode.J,
+        KeyCode.K,
+        KeyCode.L,
+    };
+    [SerializeField] private int initNoteGroupNum = 2;
     // 동적으로 늘어날 수 있겠끔 리스트 사용
     private List<NoteGroup> noteGroupClassList;
 
@@ -21,10 +35,19 @@ public class NoteManager : MonoBehaviour
     public void Activate()
     {// 생성 함수 호출 함수
         // 키 코드 인자로 전달
-        foreach (KeyCode _initKeyCode in this.initKeyCodeArr)
+        for (int i = 0; i < this.initNoteGroupNum; i++)
         {
-            this.OnSpawnNoteGroup(_initKeyCode);
+            KeyCode _keyCode = this.wholeKeyCodeArr[i];
+            this.OnSpawnNoteGroup(_keyCode);
         }
+    }
+
+    // 오버라이드
+    public void OnSpawnNoteGroup()
+    {
+        int _activateNoteGroupNum = this.noteGroupClassList.Count;
+        KeyCode _keyCode = this.wholeKeyCodeArr[_activateNoteGroupNum];
+        this.OnSpawnNoteGroup(_keyCode);
     }
 
     public void OnSpawnNoteGroup(KeyCode _keyCode)
@@ -46,12 +69,19 @@ public class NoteManager : MonoBehaviour
         int _randID = Random.Range(0, this.noteGroupClassList.Count);
         NoteGroup _randNoteGroupClass = this.noteGroupClassList[_randID];
 
+        NoteGroup _correctNoteGroupClass = null;
         // 내가 입력한 키의 줄만 맨 위에 과일 추가 생성
         foreach (NoteGroup _noteGroupClass in this.noteGroupClassList)
         {
             _noteGroupClass.OnSpawnNote(_noteGroupClass == _randNoteGroupClass);
-            bool _isSelected = _noteGroupClass.GetKeyCode == _keycode;
-            _noteGroupClass.OnInput(_isSelected);
+
+            if(_noteGroupClass.GetKeyCode != _keycode)
+                _noteGroupClass.OnInput(false);
+            else
+                _correctNoteGroupClass = _noteGroupClass;
         }
+
+        if( _correctNoteGroupClass != null)
+            _correctNoteGroupClass.OnInput(true);  // foreach 바깥에서 돌기 때문에 실행됨.1
     }
 }
