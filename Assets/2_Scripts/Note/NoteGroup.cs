@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class NoteGroup : MonoBehaviour
@@ -12,7 +13,8 @@ public class NoteGroup : MonoBehaviour
     [SerializeField] private Sprite nomalBtnSprite = null;
     [SerializeField] private Sprite selectedBtnSprite = null;
     [SerializeField] private Animation anim = null;
-    [SerializeField] private KeyCode keyCode;   
+    [SerializeField] private TextMeshPro keycodeTmp = null;
+    private KeyCode keyCode;           // 동적으로 할당됨. 시리어화 필요없음
     private List<Note> noteClassList;
 
     public KeyCode GetKeyCode => this.keyCode;
@@ -22,13 +24,19 @@ public class NoteGroup : MonoBehaviour
         this.noteClassList = new List<Note>();
 
     }
-    // Start is called before the first frame update
-    void Start()
+
+    public void Activate(KeyCode _keyCode)
     {
+        this.keyCode = _keyCode;
+
+        this.keycodeTmp.text = _keyCode.ToString();
+
         for (int i = 0; i < noteMaxNum; i++)
         {
             this.OnSpawnNote(true); // 처음에는 무조건 사과로 시작
         }
+
+        InputManager.Instance.AddKeycode(_keyCode);
     }
     public void OnSpawnNote(bool _isApple) {
         GameObject _noteClassObj = GameObject.Instantiate(this.baseNoteClass.gameObject);
@@ -40,11 +48,6 @@ public class NoteGroup : MonoBehaviour
         _noteClass.Activate(_isApple);
 
         this.noteClassList.Add(_noteClass);
-    }
-
-    void Update()
-    {
-        
     }
 
     // 노트매니저에게 클릭 이벤트 받음
