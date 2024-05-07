@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private float maxTime = 30f;
 
+    public bool IsGameDone => this.gameClearObj.activeSelf == true || this.gameOverObj.activeSelf == true;
+
     void Awake()
     {
         Instance = this;  
@@ -44,10 +46,12 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.OnTimer(_currentTime, this.maxTime);
 
             yield return null;
+
+            if(this.IsGameDone)
+            {
+                yield break;
+            }
         }
-
-        // GameOver
-
         this.gameOverObj.SetActive(true);
     }
 
@@ -77,6 +81,6 @@ public class GameManager : MonoBehaviour
     }
     public void CallBtn_Restart()
     {
-
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 }
